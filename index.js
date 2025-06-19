@@ -136,6 +136,46 @@ app.get('/api/onchain-stats', async (req, res) => {
   }
 });
 
+// Add this route to handle score calculation
+app.post('/api/calculate-role', async (req, res) => {
+    try {
+      const inputData = req.body;
+  
+      // Prepare data to send to Flask ML model
+      const payload = {
+        totalContributions: inputData.totalContributions,
+        pullRequests: inputData.pullRequests,
+        issues: inputData.issues,
+        repositoriesContributedTo: inputData.repositoriesContributedTo,
+        followers: inputData.followers,
+        repositories: inputData.repositories,
+        ethBalance: inputData.ethBalance,
+        txCount: inputData.txCount,
+        isContractDeployer: inputData.isContractDeployer,
+        contractDeployments: inputData.contractDeployments,
+        tokenBalances: inputData.tokenBalances,
+        nftCount: inputData.nftCount,
+        daoVotes: inputData.daoVotes,
+        hasNFTs: inputData.hasNFTs
+      };
+  
+      // Call your Flask ML service
+      const flaskResponse = await axios.post('https://mlflaskmodel.onrender.com/predict', payload);
+  
+      // Pass response back to frontend
+      res.json({
+        role: flaskResponse.data.role,
+        githubScore: flaskResponse.data.githubScore,
+        onchainScore: flaskResponse.data.onchainScore
+      });
+  
+    } catch (error) {
+      console.error('Error calling ML model:', error.message);
+      res.status(500).json({ error: 'Failed to calculate role' });
+    }
+  });
+  
+
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
   });
