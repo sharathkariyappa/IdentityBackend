@@ -165,8 +165,8 @@ app.post('/api/calculate-role', async (req, res) => {
       // Pass response back to frontend
       res.json({
         role: flaskResponse.data.role,
-        githubScore: flaskResponse.data.githubScore,
-        onchainScore: flaskResponse.data.onchainScore
+        githubScore: flaskResponse.data.github_score,
+        onchainScore: flaskResponse.data.onchain_score
       });
   
     } catch (error) {
