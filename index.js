@@ -7,6 +7,8 @@ dotenv.config();
 const PORT = 30008;
 import { ethers, isAddress, JsonRpcProvider } from 'ethers';
 import { ERC20_ABI } from './erc20ABI.js';
+const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173';
+
 
 const app = express();
 app.use(cors());
@@ -34,7 +36,7 @@ app.get('/api/github/callback', async (req, res) => {
     });
 
     res.redirect(
-      `http://localhost:5173/github/callback?token=${access_token}&data=${encodeURIComponent(JSON.stringify(userRes.data))}`
+      `${FRONTEND_URL}/github/callback?token=${access_token}&data=${encodeURIComponent(JSON.stringify(userRes.data))}`
     );
   } catch (err) {
     console.error('GitHub Auth Error:', err?.response?.data || err.message);
