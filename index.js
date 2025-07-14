@@ -9,10 +9,16 @@ import { ethers, isAddress, JsonRpcProvider } from 'ethers';
 import { ERC20_ABI } from './erc20ABI.js';
 const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173';
 
+import rewardRoute from './routes/reward.js';
+import mintBadgeRoute from './routes/mintbadge.js';
+
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+app.use('/api/reward', rewardRoute);
+app.use('/api/mint-badge', mintBadgeRoute);
 
 const provider = new JsonRpcProvider(`https://mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`);
 
