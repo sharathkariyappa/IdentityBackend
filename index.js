@@ -7,7 +7,7 @@ dotenv.config();
 const PORT = 30008;
 import { ethers, isAddress, JsonRpcProvider } from 'ethers';
 import { ERC20_ABI } from './erc20ABI.js';
-const FRONTEND_URL = 'http://localhost:5173';
+const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173';
 
 import rewardRoute from './routes/reward.js';
 import mintBadgeRoute from './routes/mintbadge.js';
