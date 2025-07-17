@@ -168,7 +168,7 @@ app.post('/api/calculate-role', async (req, res) => {
       };
   
       // Call your Flask ML service
-      const flaskResponse = await axios.post('https://mlflaskmodel.onrender.com/predict', payload);
+      const flaskResponse = await axios.post('https://mlflaskmodel-production.up.railway.app/predict', payload);
   
       // Pass response back to frontend
       res.json({
